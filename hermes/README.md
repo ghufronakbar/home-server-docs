@@ -36,6 +36,7 @@ Browser  ──►  Cloudflare Access (opsional, disarankan)  ──►  Cloudfl
 | [03-connect-9router.md](03-connect-9router.md) | Sambungkan model Hermes ke 9router (provider custom + gotcha User-Agent 403) |
 | [04-setup-discord.md](04-setup-discord.md) | Setup bot Discord: buat server/bot → inject env → cara pakai (thread) + gotcha rate-limit |
 | [05-tts.md](05-tts.md) | Aktifkan Text-to-Speech (Edge TTS) — install ke durable lazy target (persisten), voice Jepang |
+| [06-9router-monitoring.md](06-9router-monitoring.md) | Agent baca usage & limit 9Router (read-only): exporter+cron, skill, quota per akun, kredensial host-only |
 
 ## Instance yang sudah jalan (referensi)
 - URL: `https://hermes.lans.my.id` (login Hermes; Cloudflare Access opsional)
@@ -45,4 +46,5 @@ Browser  ──►  Cloudflare Access (opsional, disarankan)  ──►  Cloudfl
 ## Langkah berikutnya
 - Sambungkan model ke **9router**: [03-connect-9router.md](03-connect-9router.md).
 - Bot **Discord**: [04-setup-discord.md](04-setup-discord.md).
+- Pemantauan 9Router oleh agent (read-only): [06-9router-monitoring.md](06-9router-monitoring.md).
 - Automation/cron (`hermes cron`) — belum didokumentasikan.
