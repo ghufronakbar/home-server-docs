@@ -38,3 +38,6 @@ Poin penting yang gampang salah:
 - URL publik: `https://9router.lans.my.id`
 - Server: `ssh home` (host `lans-hp`)
 - Dokploy project: **AI-Workspace** → compose service **9router**
+
+## Layanan terkait
+- **Hermes Agent** (Nous Research) — di-deploy di server yang sama (Dokploy AI-Workspace), publik di `https://hermes.lans.my.id`. Runbook: [../hermes/README.md](../hermes/README.md). Rencananya modelnya disambungkan ke 9router ini (`provider: custom`).
