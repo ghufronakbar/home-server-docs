@@ -33,6 +33,8 @@ Poin penting yang gampang salah:
 | [03-cxmodel-helper.md](03-cxmodel-helper.md) | Command `cxmodel` untuk ganti model & reasoning cepat |
 | [04-backup-restore.md](04-backup-restore.md) | Backup & restore data (akun + API key) |
 | [05-troubleshooting.md](05-troubleshooting.md) | Error umum + solusinya |
+| [06-cxgateway.md](06-cxgateway.md) | Command `cxgateway` untuk pindah gateway (home server ⇄ lokal) |
+| [07-install-9router-lokal.md](07-install-9router-lokal.md) | Jalankan 9Router lokal di MacBook via docker compose (repo `dev-tools`) |
 
 ## Instance yang sudah jalan (referensi)
 - URL publik: `https://9router.lans.my.id`
