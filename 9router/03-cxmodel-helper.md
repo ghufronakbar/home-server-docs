@@ -11,9 +11,13 @@ Command shell (zsh) untuk mengganti **model** dan **reasoning effort** Codex tan
 ```bash
 cxmodel            # menu tree: pilih Model / Reasoning (picker fzf), loop sampai "Keluar"
 cxmodel gpt-5.5    # set model langsung → cx/gpt-5.5 (prefix otomatis)
-cxmodel -r high    # set reasoning langsung (minimal|low|medium|high)
+cxmodel -r xhigh   # set reasoning langsung (auto|minimal|low|medium|high|xhigh|max)
 cxmodel -l         # tampilkan model & reasoning aktif
+cxmodels           # refresh daftar model dari gateway aktif (alias: cxmodel -u)
 ```
+
+Model dari provider mana pun bisa dipilih, bukan cuma `cx/*`:
+`dahono/claude-opus-5`, `ag/auto`, `ollama/…`, dst.
 Perubahan berlaku di **sesi codex baru**.
 
 ## Pasang: tempel ke `~/.zshrc`
@@ -21,7 +25,7 @@ Perubahan berlaku di **sesi codex baru**.
 # === 9Router / Codex switcher (tree) — ganti model & reasoning ===
 # cxmodel            -> menu tree: pilih Model / Reasoning (picker fzf)
 # cxmodel gpt-5.5    -> set model langsung (prefix cx/ otomatis)
-# cxmodel -r high    -> set reasoning langsung (minimal|low|medium|high)
+# cxmodel -r xhigh   -> set reasoning langsung (auto|minimal|low|medium|high|xhigh|max)
 # cxmodel -l         -> tampilkan model & reasoning aktif
 _cx_set_model() {
   local cfg="$HOME/.codex/config.toml" choice="$1" live cur; local -a models
@@ -38,7 +42,8 @@ _cx_set_model() {
   echo "✅ model -> ${choice}"
 }
 _cx_set_effort() {
-  local cfg="$HOME/.codex/config.toml" choice="$1" cur; local -a efforts=(minimal low medium high)
+  local cfg="$HOME/.codex/config.toml" choice="$1" cur
+  local -a efforts=(auto minimal low medium high xhigh max)
   cur=$(sed -nE 's/^model_reasoning_effort = "(.*)"/\1/p' "$cfg" | head -1)
   [[ -z "$choice" ]] && choice=$(print -l -- "${efforts[@]}" | fzf --height=30% --reverse --prompt="reasoning (aktif: ${cur}) > ")
   [[ -z "$choice" ]] && return 1
@@ -78,7 +83,30 @@ cxmodel() {
 ```
 Setelah tempel: `source ~/.zshrc`.
 
+## `cxmodels` — refresh daftar model
+Jalankan tiap habis menambah provider/model baru di dashboard 9Router. Hasilnya di-cache
+**per gateway** di `~/.config/cxgateway/models.<gateway>.txt`, dan perubahannya dilaporkan:
+```
+➕ 3 model baru:
+   cx/gpt-5.5
+   dahono/claude-opus-5
+   dahono/glm-5.3
+✅ home: 94 model tersimpan di ~/.config/cxgateway/models.home.txt
+   ag         9
+   cx         14
+   dahono     64
+   ollama     7
+```
+Cache dipisah per gateway karena home server dan instance lokal punya provider berbeda.
+
 ## Cara kerja singkat
-- Daftar model diambil **live** dari `$OPENAI_BASE_URL/models` (fallback ke list statis bila offline).
+- Daftar model diambil **live** dari `$OPENAI_BASE_URL/models` tiap kali picker dibuka,
+  dan hasilnya sekalian menyegarkan cache. Kalau gateway mati, picker jatuh ke cache
+  (peringatan ditampilkan); kalau cache juga kosong, dipakai daftar minimal.
 - Hanya baris `model` / `model_reasoning_effort` yang diubah; `model_provider` & lainnya tidak tersentuh.
-- Effort divalidasi terhadap `minimal|low|medium|high`.
+- Prefix `cx/` **hanya** ditambahkan kalau nama model belum punya prefix provider sama sekali
+  (tidak mengandung `/`). Jadi `cxmodel gpt-5.5` → `cx/gpt-5.5`, sedangkan
+  `dahono/glm-5.3` dibiarkan apa adanya. Versi lama memaksa `cx/` ke apa pun yang bukan
+  `cx/*`, sehingga model provider lain rusak jadi `cx/dahono/glm-5.3`.
+- Effort divalidasi terhadap `auto|minimal|low|medium|high|xhigh|max` — mengikuti pilihan yang tersedia di dashboard 9Router.
+- ⚠️ Codex CLI (v0.147.0) **tidak** memvalidasi `model_reasoning_effort` secara lokal: nilai apa pun (bahkan `NGAWUR`) diterima dan diteruskan apa adanya ke gateway. Jadi daftar di atas murni pagar dari sisi kita; yang menentukan sah/tidaknya adalah 9Router + model tujuan.
