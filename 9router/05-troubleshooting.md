@@ -46,6 +46,24 @@ Password = env `INITIAL_PASSWORD`. Kalau di DB sudah ada hash, mengubah `INITIAL
 
 ---
 
+## Satu provider mati total, provider lain sehat
+
+### Semua model `ag/*` gagal 429 `RESOURCE_EXHAUSTED` / 403, padahal Quota Tracker masih penuh
+**Sebab:** image `decolua/9router:latest` **tidak auto-update**. Upstream memindahkan endpoint
+provider (kasus 2026-09-23: chat Antigravity pindah dari `cloudcode-pa.googleapis.com` ke
+`daily-cloudcode-pa.googleapis.com`), instance lama masih menembak host lama.
+**Fix:** upgrade image — `docker pull decolua/9router:latest` lalu `docker compose up -d 9router`.
+Bukan soal quota, bukan soal scope OAuth, jadi menunggu reset quota atau OAuth ulang tidak menolong.
+Uraian lengkap + prosedur upgrade & backup: [08-antigravity-provider.md](08-antigravity-provider.md).
+
+**Cek cepat selisih versi:**
+```bash
+ssh home 'docker exec 9router sh -lc "grep -m1 version /app/package.json"'   # yang jalan
+npm view 9router version                                                      # yang terbaru
+```
+
+---
+
 ## Referensi cek cepat (server)
 ```bash
 ssh home '

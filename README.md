@@ -41,12 +41,16 @@ Hermes Agent ────────┘        │
 │   ├── 02-setup-codex-cli.md
 │   ├── 03-cxmodel-helper.md
 │   ├── 04-backup-restore.md
-│   └── 05-troubleshooting.md
+│   ├── 05-troubleshooting.md
+│   ├── 06-cxgateway.md
+│   ├── 07-install-9router-lokal.md
+│   └── 08-antigravity-provider.md
 └── hermes/
     ├── README.md          (index Hermes)
     ├── 01-install-hermes-dokploy.md
     ├── 02-troubleshooting.md
     ├── 03-connect-9router.md
     ├── 04-setup-discord.md
-    └── 05-tts.md
+    ├── 05-tts.md
+    └── 06-9router-monitoring.md
 ```

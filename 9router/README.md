@@ -35,6 +35,7 @@ Poin penting yang gampang salah:
 | [05-troubleshooting.md](05-troubleshooting.md) | Error umum + solusinya |
 | [06-cxgateway.md](06-cxgateway.md) | Command `cxgateway` untuk pindah gateway (home server ⇄ lokal) |
 | [07-install-9router-lokal.md](07-install-9router-lokal.md) | Jalankan 9Router lokal di MacBook via docker compose (repo `dev-tools`) |
+| [08-antigravity-provider.md](08-antigravity-provider.md) | Insiden provider Antigravity (`ag/*`) mati total + cara upgrade image 9Router |
 
 ## Instance yang sudah jalan (referensi)
 - URL publik: `https://9router.lans.my.id`
